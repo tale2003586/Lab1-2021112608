@@ -5,9 +5,6 @@ public class myNode {
     private int outDegree;
     private int inDegree;
 
-    public myNode() {
-    }
-
     public myNode(String content) {
         this.outDegree = 0;
         this.content = content;

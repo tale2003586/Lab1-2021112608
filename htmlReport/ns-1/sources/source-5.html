@@ -1,0 +1,259 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > GraphGenerator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">matrixversion</a>
+</div>
+
+<h1>Coverage Summary for Class: GraphGenerator (matrixversion)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GraphGenerator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/70)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package matrixversion;
+&nbsp;
+&nbsp;import org.graphstream.graph.*;
+&nbsp;import org.graphstream.graph.implementations.*;
+&nbsp;import org.graphstream.ui.swing_viewer.ViewPanel;
+&nbsp;import org.graphstream.ui.view.Viewer;
+&nbsp;
+&nbsp;import javax.imageio.ImageIO;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.image.BufferedImage;
+&nbsp;import java.io.*;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;public class GraphGenerator {
+<b class="nc">&nbsp;    public GraphGenerator() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void generate(String matrix1name, String nodesname) throws IOException {
+<b class="nc">&nbsp;        generate(matrix1name, null, nodesname);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void generate(String matrix1name, String matrix2name, String nodesname) throws IOException {
+&nbsp;        // 设置图形引擎为 Swing
+<b class="nc">&nbsp;        System.setProperty(&quot;org.graphstream.ui&quot;, &quot;swing&quot;);</b>
+&nbsp;
+&nbsp;        // 读取第一个邻接矩阵
+<b class="nc">&nbsp;        int[][] adjacencyMatrix1 = readAdjacencyMatrixFromFile(matrix1name);</b>
+<b class="nc">&nbsp;        int[][] adjacencyMatrix2 = null;</b>
+<b class="nc">&nbsp;        if (matrix2name != null) {</b>
+<b class="nc">&nbsp;            adjacencyMatrix2 = readAdjacencyMatrixFromFile(matrix2name);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        List&lt;String&gt; nodeNames = readNodeNames(nodesname);</b>
+&nbsp;
+&nbsp;        // 创建图
+<b class="nc">&nbsp;        Graph graph = createGraphFromAdjacencyMatrices(adjacencyMatrix1, adjacencyMatrix2);</b>
+&nbsp;
+<b class="nc">&nbsp;        int count = 0;</b>
+<b class="nc">&nbsp;        for (Node node : graph) {</b>
+<b class="nc">&nbsp;            node.setAttribute(&quot;ui.label&quot;, nodeNames.get(count));</b>
+<b class="nc">&nbsp;            node.setAttribute(&quot;ui.style&quot;, &quot;text-size: 20;&quot;); // 设置标签的字体大小为 20</b>
+<b class="nc">&nbsp;            count++;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // 可视化图
+<b class="nc">&nbsp;        Viewer viewer = graph.display();</b>
+<b class="nc">&nbsp;        viewer.enableAutoLayout(); // 启用自动布局</b>
+&nbsp;
+<b class="nc">&nbsp;        ViewPanel viewPanel = (ViewPanel) viewer.getDefaultView();</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            Dimension dimension = viewPanel.getSize();</b>
+<b class="nc">&nbsp;            BufferedImage image = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_ARGB);</b>
+<b class="nc">&nbsp;            Graphics2D graphics = image.createGraphics();</b>
+<b class="nc">&nbsp;            viewPanel.paint(graphics);</b>
+<b class="nc">&nbsp;            ImageIO.write(image, &quot;png&quot;, new File(&quot;graph.png&quot;));</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Graph saved successfully.&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;String&gt; readNodeNames(String filename) throws IOException {
+<b class="nc">&nbsp;        List&lt;String&gt; nodeNames = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {</b>
+&nbsp;            String line;
+<b class="nc">&nbsp;            while ((line = reader.readLine()) != null) {</b>
+<b class="nc">&nbsp;                nodeNames.add(line.trim()); // 将每一行添加到节点名称列表中</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;        return nodeNames;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] readAdjacencyMatrixFromFile(String filename) {
+<b class="nc">&nbsp;        List&lt;int[]&gt; rows = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {</b>
+&nbsp;            String line;
+<b class="nc">&nbsp;            while ((line = reader.readLine()) != null) {</b>
+<b class="nc">&nbsp;                String[] elements = line.trim().split(&quot;,&quot;);</b>
+<b class="nc">&nbsp;                int[] row = new int[elements.length];</b>
+<b class="nc">&nbsp;                for (int i = 0; i &lt; elements.length; i++) {</b>
+<b class="nc">&nbsp;                    row[i] = Integer.parseInt(elements[i]);</b>
+&nbsp;                }
+<b class="nc">&nbsp;                rows.add(row);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        } catch (IOException e) {</b>
+<b class="nc">&nbsp;            e.printStackTrace();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // 检查行数和列数是否一致
+<b class="nc">&nbsp;        int numRows = rows.size();</b>
+<b class="nc">&nbsp;        if (numRows == 0) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;邻接矩阵文件为空&quot;);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        int numCols = rows.get(0).length;</b>
+<b class="nc">&nbsp;        for (int[] row : rows) {</b>
+<b class="nc">&nbsp;            if (row.length != numCols) {</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;邻接矩阵的行数和列数不一致&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int[][] adjacencyMatrix = new int[numRows][numCols];</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; numRows; i++) {</b>
+<b class="nc">&nbsp;            adjacencyMatrix[i] = rows.get(i);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        return adjacencyMatrix;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Graph createGraphFromAdjacencyMatrices(int[][] adjacencyMatrix1, int[][] adjacencyMatrix2) {
+<b class="nc">&nbsp;        Graph graph = new SingleGraph(&quot;Graph&quot;);</b>
+<b class="nc">&nbsp;        for (int i = 0; i &lt; adjacencyMatrix1.length; i++) {</b>
+<b class="nc">&nbsp;            graph.addNode(String.valueOf(i)); // 使用节点索引作为节点 ID</b>
+&nbsp;        }
+<b class="nc">&nbsp;        for (int i = 0; i &lt; adjacencyMatrix1.length; i++) {</b>
+<b class="nc">&nbsp;            for (int j = 0; j &lt; adjacencyMatrix1[i].length; j++) {</b>
+<b class="nc">&nbsp;                if (adjacencyMatrix1[i][j] != 0 || (adjacencyMatrix2 != null &amp;&amp; adjacencyMatrix2[i][j] != 0)) {</b>
+&nbsp;                    // 添加有向边并设置颜色和权值标签
+<b class="nc">&nbsp;                    Edge edge = graph.addEdge(String.valueOf(i) + &quot;-&quot; + String.valueOf(j), String.valueOf(i), String.valueOf(j), true);</b>
+<b class="nc">&nbsp;                    if (adjacencyMatrix2 == null) {</b>
+<b class="nc">&nbsp;                        edge.setAttribute(&quot;ui.style&quot;, &quot;arrow-shape: arrow; fill-color: black;&quot;);</b>
+<b class="nc">&nbsp;                    } else if (adjacencyMatrix1[i][j] != 0 &amp;&amp; adjacencyMatrix2[i][j] != 0) {</b>
+<b class="nc">&nbsp;                        edge.setAttribute(&quot;ui.style&quot;, &quot;arrow-shape: arrow; fill-color: red;&quot;);</b>
+<b class="nc">&nbsp;                    } else if (adjacencyMatrix1[i][j] != 0) {</b>
+<b class="nc">&nbsp;                        edge.setAttribute(&quot;ui.style&quot;, &quot;arrow-shape: arrow; fill-color: black;&quot;);</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        edge.setAttribute(&quot;ui.style&quot;, &quot;arrow-shape: arrow; fill-color: green;&quot;);</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    edge.setAttribute(&quot;ui.label&quot;, String.valueOf(adjacencyMatrix1[i][j] != 0 ? adjacencyMatrix1[i][j] : adjacencyMatrix2[i][j])); // 设置边的权值为标签</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return graph;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static void main(String[] args) throws IOException {
+<b class="nc">&nbsp;        GraphGenerator generator = new GraphGenerator();</b>
+&nbsp;        // 仅输入一个邻接矩阵
+<b class="nc">&nbsp;        generator.generate(&quot;/path/to/matrix1.txt&quot;, &quot;/path/to/nodes.txt&quot;);</b>
+&nbsp;
+&nbsp;        // 输入两个邻接矩阵
+&nbsp;        // generator.generate(&quot;/path/to/matrix1.txt&quot;, &quot;/path/to/matrix2.txt&quot;, &quot;/path/to/nodes.txt&quot;);
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-16 12:33</div>
+</div>
+</body>
+</html>

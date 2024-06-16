@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=GBK"> 
+  <title>Coverage Report > myGraph</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">matrixversion</a>
+</div>
+
+<h1>Coverage Summary for Class: myGraph (matrixversion)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">myGraph</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    85%
+  </span>
+  <span class="absValue">
+    (17/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package matrixversion;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Arrays;
+&nbsp;
+&nbsp;public class myGraph {
+&nbsp;    private ArrayList&lt;myNode&gt; nodes;
+&nbsp;    private int[][] edges;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public myGraph(ArrayList&lt;myNode&gt; nodes, int nodesNumber) {</b>
+<b class="fc">&nbsp;        this.nodes = nodes;</b>
+<b class="fc">&nbsp;        this.edges = new int[nodesNumber][nodesNumber];</b>
+<b class="fc">&nbsp;        for(int i = 0; i &lt; nodesNumber; i++){</b>
+<b class="fc">&nbsp;            Arrays.fill(edges[i], 0);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;myNode&gt; getNodes() {
+<b class="nc">&nbsp;        return nodes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNodes(ArrayList&lt;myNode&gt; nodes) {
+<b class="nc">&nbsp;        this.nodes = nodes;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int[][] getEdges() {
+<b class="fc">&nbsp;        return edges;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEdges(int[][] edges) {
+<b class="nc">&nbsp;        this.edges = edges;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //添加矩阵中的边
+&nbsp;    public void addEdges(int x, int y) {
+&nbsp;        //添加边的同时增加出度和入度
+<b class="fc">&nbsp;        this.nodes.get(x).addOutDegree();</b>
+<b class="fc">&nbsp;        this.nodes.get(y).addInDegree();</b>
+<b class="fc">&nbsp;        this.edges[x][y]++;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    //为矩阵的构建添加节点
+&nbsp;    public void addNodes(myNode node) {
+<b class="fc">&nbsp;        this.nodes.add(node);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //进行字符串匹配以获取下标
+&nbsp;    public int getLabel(String target) {
+<b class="pc">&nbsp;        if(target.equals(&quot;&quot;)) return -1;</b>
+&nbsp;        //找到匹配的就返回下标
+<b class="fc">&nbsp;        for(int i = 0; i &lt; this.nodes.size(); i++){</b>
+<b class="fc">&nbsp;            if(this.nodes.get(i).getContent().equals(target)){</b>
+<b class="fc">&nbsp;                return i;</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //没找到想匹配的就返回-1
+<b class="fc">&nbsp;        return -2;</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    //获取集合的大小
+&nbsp;    public int getNodesSize() {
+<b class="fc">&nbsp;        return this.nodes.size();</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    //通过序号获取节点中的内容
+&nbsp;    public String getNodeContent(int index) {
+<b class="fc">&nbsp;        return this.nodes.get(index).getContent();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-06-16 12:33</div>
+</div>
+</body>
+</html>

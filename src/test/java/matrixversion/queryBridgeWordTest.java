@@ -12,17 +12,17 @@ public class queryBridgeWordTest {
     }
 
     @Test
-    public void test() {
-        graMethod.textToGraph("C:\\Users\\tale\\Documents\\Tencent Files\\2439082470\\FileRecv\\MobileFile\\softwareproject1\\softwareproject1\\src\\test\\java\\text\\txt\\test1.txt");
+    public void test1() {
+        graMethod.textToGraph("src/test/java/text/txt/test1.txt");
         String result = graMethod.queryBridgeWords("word","mother");
         assertEquals("No word or mother in the graph!",result);
     }
 
     @Test
     public void test2() {
-        graMethod.textToGraph("C:\\Users\\tale\\Documents\\Tencent Files\\2439082470\\FileRecv\\MobileFile\\softwareproject1\\softwareproject1\\src\\test\\java\\text\\txt\\test1.txt");
-        String result = graMethod.queryBridgeWords("morning","mother");
-        assertEquals("No morning or mother in the graph!",result);
+        graMethod.textToGraph("src/test/java/text/txt/test1.txt");
+        String result = graMethod.queryBridgeWords("because","mother");
+        assertEquals("No because or mother in the graph!",result);
 
     }
     @Test
@@ -30,7 +30,6 @@ public class queryBridgeWordTest {
         graMethod.textToGraph("src/test/java/text/txt/test2.txt");
         String result = graMethod.queryBridgeWords("second","first");
         assertEquals("No bridge words from second to first!",result);
-
     }
     @Test
     public void test4() {

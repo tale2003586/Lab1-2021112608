@@ -250,7 +250,7 @@ public class GUI {
                 else {
                     String words = null;
                     try {
-                        words = Gram.dijkstra(word1,word2);
+                        words = Gram.calcShortestPath(word1,word2);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

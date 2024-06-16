@@ -7,8 +7,6 @@ public class myGraph {
     private ArrayList<myNode> nodes;
     private int[][] edges;
 
-    public myGraph() {
-    }
 
     public myGraph(ArrayList<myNode> nodes, int nodesNumber) {
         this.nodes = nodes;
@@ -50,6 +48,7 @@ public class myGraph {
 
     //进行字符串匹配以获取下标
     public int getLabel(String target) {
+        if(target.equals("")) return -1;
         //找到匹配的就返回下标
         for(int i = 0; i < this.nodes.size(); i++){
             if(this.nodes.get(i).getContent().equals(target)){
@@ -57,7 +56,7 @@ public class myGraph {
             }
         }
         //没找到想匹配的就返回-1
-        return -1;
+        return -2;
     }
     
     //获取集合的大小
